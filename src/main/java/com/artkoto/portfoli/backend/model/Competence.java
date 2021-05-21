@@ -3,6 +3,7 @@ package com.artkoto.portfoli.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data @Entity @Table(name = "competences")
 public class Competence {
@@ -15,4 +16,7 @@ public class Competence {
 
     @Column(name = "show")
     private String afficherCompetence;
+
+    @ManyToOne
+    private CompetenceType competenceTyp;
 }

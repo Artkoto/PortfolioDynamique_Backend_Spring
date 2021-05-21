@@ -39,4 +39,20 @@ public class Personne {
     @Column(name = "add_email")
     private String email;
 
+    @ManyToMany
+    Set<Hobie> loisirs ;
+
+    @ManyToMany
+    Set<Formation> formations;
+
+    @ManyToMany
+    Set<Experience>experiences;
+
+    @ManyToMany
+    Set<Competence>competences;
+
+    @ManyToMany
+    Set<Projet>projets;
+
+
 }
