@@ -3,6 +3,8 @@ package com.artkoto.portfoli.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
+
 
 @Data
 @Entity
@@ -10,7 +12,7 @@ import javax.persistence.*;
 public class Personne {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "first_name")
@@ -36,6 +38,5 @@ public class Personne {
 
     @Column(name = "add_email")
     private String email;
-
 
 }
