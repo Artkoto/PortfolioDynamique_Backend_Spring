@@ -3,7 +3,6 @@ package com.artkoto.portfoli.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data @Entity @Table(name = "competences")
 public class Competence {
@@ -15,8 +14,9 @@ public class Competence {
     private String evolution; //en pourcentage
 
     @Column(name = "show")
-    private String afficherCompetence;
+    private Boolean afficherCompetence;
 
-    @ManyToOne
-    private CompetenceType competenceTyp;
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name = "competence_type_id")
+    private CompetenceType competenceType;
 }

@@ -15,14 +15,16 @@ public class Qualification {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    //@Temporal(TemporalType.DATE)
+    private String date;
 
     @Column(length = 25)
     private String name;
 
     @Column(name = "show")
     private Boolean montrer;
+
+    private String lieux;
 
 
     private String detail;

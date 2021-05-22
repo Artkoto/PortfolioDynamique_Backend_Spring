@@ -39,19 +39,34 @@ public class Personne {
     @Column(name = "add_email")
     private String email;
 
-    @ManyToMany
+    @ManyToMany( cascade = {CascadeType.ALL})
+    @JoinTable(name="personnes_hobies",
+            joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="hobie_id", referencedColumnName="name"))
     Set<Hobie> loisirs ;
 
-    @ManyToMany
+    @ManyToMany( cascade = {CascadeType.ALL})
+    @JoinTable(name="personnes_formations",
+            joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="formation_id", referencedColumnName="id"))
     Set<Formation> formations;
 
-    @ManyToMany
+    @ManyToMany( cascade = {CascadeType.ALL})
+    @JoinTable(name="personnes_experiences",
+            joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="experience_id", referencedColumnName="id"))
     Set<Experience>experiences;
 
-    @ManyToMany
+    @ManyToMany (cascade = {CascadeType.ALL})
+    @JoinTable(name="personnes_competences",
+            joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="competence_id", referencedColumnName="id"))
     Set<Competence>competences;
 
-    @ManyToMany
+    @ManyToMany (cascade = {CascadeType.ALL})
+    @JoinTable(name="personnes_projets",
+            joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="projet_id", referencedColumnName="id"))
     Set<Projet>projets;
 
 

@@ -10,5 +10,5 @@ import javax.persistence.*;
 public class Experience extends Qualification {
 
     @Column(name = "tools")
-    private String outils;
+    private String outils; //TODO a modifier
 }

@@ -19,8 +19,10 @@ public class Projet {
     @Column(name = "git" )
     private String gitLink;
     @Column(name = "tools")
-    private String outils;
+    private String outils; //TODO à corriger
     @Column(name = "show")
     private boolean afficherProjet;
+    @Column(name = "miniature")
+    private String photo;
 
 }
