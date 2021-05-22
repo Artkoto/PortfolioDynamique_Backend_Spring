@@ -16,7 +16,7 @@ public class Qualification {
     private Long id;
 
     //@Temporal(TemporalType.DATE)
-    private String date;
+    private String date; //TODO modifier le String en date
 
     @Column(length = 25)
     private String name;
@@ -29,5 +29,6 @@ public class Qualification {
 
     private String detail;
 
+    //TODO mettre date de debut et fin
 
 }

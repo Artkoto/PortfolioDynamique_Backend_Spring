@@ -24,5 +24,6 @@ public class Projet {
     private boolean afficherProjet;
     @Column(name = "miniature")
     private String photo;
+    //TODO ajout de date du projet debut et fin
 
 }

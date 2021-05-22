@@ -18,6 +18,8 @@ public class PersonneController {
     @GetMapping("/personnes")
     public Iterable<Personne> getPersonnes() {
         return personneService.getPersonnes();
+
+        //TODO ajot des autres requettes
     }
 }
 

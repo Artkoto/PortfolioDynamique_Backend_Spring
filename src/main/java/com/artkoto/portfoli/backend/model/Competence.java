@@ -11,7 +11,7 @@ public class Competence {
     private Long id;
 
     private String name;
-    private String evolution; //en pourcentage
+    private String evolution; //TODO en pourcentage double
 
     @Column(name = "show")
     private Boolean afficherCompetence;
