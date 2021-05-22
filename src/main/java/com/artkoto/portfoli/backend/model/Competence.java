@@ -10,12 +10,9 @@ public class Competence {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 25)
     private String name;
-    private String evolution; //TODO en pourcentage double
-
-    @Column(name = "show")
-    private Boolean afficherCompetence;
-
+    private Integer evolution;
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "competence_type_id")
     private CompetenceType competenceType;

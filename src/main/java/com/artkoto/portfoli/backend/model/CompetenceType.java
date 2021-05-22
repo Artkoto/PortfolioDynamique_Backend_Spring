@@ -3,8 +3,6 @@ package com.artkoto.portfoli.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data @Entity @Table(name = "competence_types")
 public class CompetenceType {
@@ -12,12 +10,7 @@ public class CompetenceType {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 25)
     private String name;
-
-    @Column(name = "show")
-    private Boolean afficher;
-
-//    @OneToMany (cascade = CascadeType.ALL)
-//    private Set<Competence> competences;
 
 }

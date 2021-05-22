@@ -15,13 +15,13 @@ public class Personne {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name" ,length = (15))
     private String nom;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name" ,length = (25))
     private String prenom;
 
-    @Column(name = "post")
+    @Column(name = "post" ,length = (50))
     private String poste ;
 
     @Column(name = "picture_link")
@@ -30,13 +30,13 @@ public class Personne {
     @Column(name = "cv_link")
     private String cv;
 
-    @Column(name = "about")
+    @Column(name = "about" ,length = (300))
     private String aPropos;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number" ,length = (15))
     private String numero;
 
-    @Column(name = "add_email")
+    @Column(name = "add_email" ,length = (50))
     private String email;
 
     @ManyToMany( cascade = {CascadeType.ALL})

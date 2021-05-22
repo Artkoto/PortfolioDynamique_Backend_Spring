@@ -6,29 +6,28 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
-
 @Data
 @Entity
+@Table(name = "qualifications")
 public class Qualification {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    //@Temporal(TemporalType.DATE)
-    private String date; //TODO modifier le String en date
+    @Temporal(TemporalType.DATE)
+    private Date date_debut;
+
+    @Temporal(TemporalType.DATE)
+    private Date date_fin;
+
 
     @Column(length = 25)
     private String name;
-
-    @Column(name = "show")
-    private Boolean montrer;
-
+    @Column(length = 50)
     private String lieux;
 
-
+    @Column(length = 300)
     private String detail;
-
-    //TODO mettre date de debut et fin
 
 }

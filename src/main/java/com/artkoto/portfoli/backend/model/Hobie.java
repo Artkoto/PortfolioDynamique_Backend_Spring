@@ -10,6 +10,7 @@ import java.util.Set;
 @Table(name = "hobies")
 public class Hobie {
     @Id
+    @Column(length = 50)
     private String name;
 
 //    @ManyToMany

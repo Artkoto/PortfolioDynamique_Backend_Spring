@@ -8,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.logging.Logger;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,88 +36,98 @@ class PersonneControllerTests {
 	//	Personne personne2= null;
 
 		//Creéation de la personne 1
-		personne1.setNom("Akoto");
-		personne1.setPrenom("Arnaud");
-		personne1.setPoste("Dev");
-		//personne1.setId();
-		personne1.setPhoto("jhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhfdicg.png");
-		personne1.setCv("dsfdhkgvhsdfhevkdvnjs;bvhjfksdkhfbvskdnfl");
-		personne1.setAPropos("je suis");
-		personne1.setNumero("076798256254");
-		personne1.setEmail("knkluhsb@uhyuest");
+		personne1.setNom("votre Nom");
+		personne1.setPrenom("votre Prenom");
+		personne1.setPoste("le poste");
+		personne1.setPhoto("url de laPhoto");
+		personne1.setCv("url du cv");
+		personne1.setAPropos("a propos de vous");
+		personne1.setNumero("+33076797...");
+		personne1.setEmail("votre@email.com");
 
 		personne1.setLoisirs(new HashSet<>(){{
+			add(new Hobie() {{ setName("vos Hobies");}});
 			add(new Hobie() {{ setName("Game");}});
-			add(new Hobie() {{ setName("Natation");}});
-			add(new Hobie() {{ setName("bla bla bla");}});
+			add(new Hobie() {{ setName("Natation ...");}});
 
 		}});
 
 		personne1.setFormations(new HashSet<>(){{
 			//1
 			add(new Formation(){{
-				setName("M1 IL");
-				setDate("26/08/1996");
-				setLieux("IStic");
-				setMontrer(false);
-				setDetail("bla bla bla bla bla bla");
+				setName("vos formations");
+				setDate_debut(new Date());
+				setDate_fin(new Date());
+				setLieux("lieux de la formation");
+				setDetail("description de la formation");
 			}});
 			//2
 			add(new Formation(){{
-				setName("L3 INFO");
-				setDate("26/08/1996");
-				setLieux("UVCI");
-				setMontrer(true);
-				setDetail("bla bla bla bla bla bla");
+				setName("M2 INFO");
+				setDate_debut(new Date());
+				setDate_fin(new Date());
+				setLieux("istic");
+				setDetail("Je suis une formation à l'istic en IL ....");
 			}});
 		}});
 		personne1.setExperiences(new HashSet<>(){{
+			SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+			add(new Experience(){{
+				setName("vos expé pro");
+				setDate_debut(formater.parse("26-08-96"));
+				setDate_fin(new Date());
+				setLieux("liex de expé");
+				setDetail("description expé");
+				setOutils("outils utilisés");
+			}});
+
 			add(new Experience(){{
 				setName("Equipier à BK");
-				setDate("26/08/1996");
-				setLieux("BK");
-				setMontrer(true);
+				setDate_debut(new Date());
+				setDate_fin(new Date());
+				setLieux("BK St Grerégoire");
 				setDetail("bla bla bla bla bla bla");
-				setOutils("rien");
 			}});
 		}});
 
 		personne1.setProjets(new HashSet<>(){{
 			add(new Projet(){{
-				setOutils("Vs Code");
-				setAfficherProjet(false);
-				setDescriptionProjet("blablavbla");
-				setNomProjet("Xproject");
-				setGitLink("fsgjkbhljsbvgjdbgfskjbgljsfb");
-				setUrlProject("bkjvhnbkjbhjbljbvfds");
-				setPhoto("kjghjgvkghvjhgv.png");
+				setOutils("outils utilisés pour le projet");
+				setDescriptionProjet("description projet");
+				setNomProjet("nom projet");
+				setGitLink("depot git du projet");
+				setUrlProject("url du projet");
+				setPhoto("image du projet");
+			}});
+			add(new Projet(){{
+				setOutils("IntelliJ");
+				//setAfficherProjet(false);
+				setDescriptionProjet("Creation de cette API avec Spring");
+				setNomProjet("Spring_project");
+				setGitLink("https://github.com/Artkoto/PortfolioDynamique_Backend_Spring");
+				setPhoto("https://avatars.githubusercontent.com/u/35773837?v=4");
 			}});
 		}});
 
 		personne1.setCompetences(new HashSet<>(){{
 			add(new Competence(){{
 				setName("Spring");
-				setAfficherCompetence(true);
 				setCompetenceType(new CompetenceType(){{
-					setAfficher(true);
 					setName("Dev");
 				}});
-				setEvolution("50");
+				setEvolution(50);
 			}});
 
 			add(new Competence(){{
 				setName("Français");
-				setAfficherCompetence(true);
 				setCompetenceType(new CompetenceType(){{
-					setAfficher(true);
 					setName("Langue");
 				}});
-				setEvolution("95");
+				setEvolution(95);
 			}});
 		}});
 
 		//ajout à la bdd
-
 		personneService.savePersonne(personne1);
 
 	}
@@ -125,7 +135,7 @@ class PersonneControllerTests {
 	@Test
 	void contextLoads()  throws Exception{
 		mockMvc.perform(get("/personnes"))
-				.andExpect(status().isOk()).andExpect(jsonPath("$[0].nom", is("Akoto")));
+				.andExpect(status().isOk()).andExpect(jsonPath("$[0].nom", is("votre Nom")));
 	}
 
 }

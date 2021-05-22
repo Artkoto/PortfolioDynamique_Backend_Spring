@@ -1,11 +1,12 @@
 package com.artkoto.portfoli.backend.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
 
+
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "formations")
