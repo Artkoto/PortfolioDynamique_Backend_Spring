@@ -1,19 +1,25 @@
 package com.artkoto.portfoli.backend.service;
 
 
+import com.artkoto.portfoli.backend.controller.ProjetController;
 import com.artkoto.portfoli.backend.model.Personne;
 import com.artkoto.portfoli.backend.repository.PresonneRepository;
+
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.Optional;
+
 
 @Data
 @Service
 public class PersonneService {
     @Autowired
     private PresonneRepository  personneRepository;
+    @Autowired
+    private ProjetController projetController;
 
     public Optional<Personne> getPersonne(final Long id){
         return personneRepository.findById(id);
@@ -28,13 +34,14 @@ public class PersonneService {
     }
 
     public Personne savePersonne(Personne personne){
-        Personne personneSauve = personneRepository.save(personne);
-        return personneSauve;
+        return personneRepository.save(personne);
     }
-//    public Personne modifyPersonne(final Long id){
-//        Personne personne1 = personneRepository.getOne(id);
-//        return  personneRepository.save()
-//    }
+    public Personne modifyPersonne(final Long id, Personne personne){
+        if (personneRepository.existsById(id)) {
+           // Personne personne1 = personneRepository.findById(id).stream().iterator().next();
+           return personneRepository.save(personne);
+        }
+        return null;
+    }
 
-    //TODO ajouter les autres services dont j'ai besoin
 }

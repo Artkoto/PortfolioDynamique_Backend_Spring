@@ -40,8 +40,8 @@ public class PersonneController {
     }
 
     @PutMapping("personnes/{id}/update")
-    public Personne updatePersonne(Personne personne){
-        return personneService.savePersonne(personne);
+    public Personne updatePersonne(Personne personne ,@PathVariable("id") final Long id ){
+         return personneService.modifyPersonne(id,personne);
     }
 
     /**
@@ -49,10 +49,13 @@ public class PersonneController {
      * @param id
      * suppression d'une personne avec l'id
      */
-    @DeleteMapping("/personnes/{id}")
+    @DeleteMapping("/personnes/{id}/delete")
     public void deletePersonne(@PathVariable("id") final Long id){
         personneService.deletePersonne(id);
     }
         //TODO ajot des autres requettes
+
     }
+
+
 
