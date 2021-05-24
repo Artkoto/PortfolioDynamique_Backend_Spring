@@ -31,7 +31,7 @@ public class Personne {
     private String cv;
 
     @Column(name = "about" ,length = (300))
-    private String aPropos;
+    private String apropos;
 
     @Column(name = "phone_number" ,length = (15))
     private String numero;
@@ -39,35 +39,32 @@ public class Personne {
     @Column(name = "add_email" ,length = (50))
     private String email;
 
-    @ManyToMany( cascade = {CascadeType.ALL})
-    @JoinTable(name="personnes_hobies",
-            joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
-            inverseJoinColumns= @JoinColumn(name="hobie_id", referencedColumnName="name"))
-    Set<Hobie> loisirs ;
+    @Column(name = "hobies" , length = 100)
+    private String loisirs ;
 
     @ManyToMany( cascade = {CascadeType.ALL})
     @JoinTable(name="personnes_formations",
             joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="formation_id", referencedColumnName="id"))
-    Set<Formation> formations;
+    private Set<Formation> formations;
 
     @ManyToMany( cascade = {CascadeType.ALL})
     @JoinTable(name="personnes_experiences",
             joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="experience_id", referencedColumnName="id"))
-    Set<Experience>experiences;
+    private Set<Experience>experiences;
 
     @ManyToMany (cascade = {CascadeType.ALL})
     @JoinTable(name="personnes_competences",
             joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="competence_id", referencedColumnName="id"))
-    Set<Competence>competences;
+    private Set<Competence>competences;
 
     @ManyToMany (cascade = {CascadeType.ALL})
     @JoinTable(name="personnes_projets",
             joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="projet_id", referencedColumnName="id"))
-    Set<Projet>projets;
+   private Set<Projet>projets;
 
 
 }

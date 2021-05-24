@@ -41,16 +41,11 @@ class PersonneControllerTests {
 		personne1.setPoste("le poste");
 		personne1.setPhoto("url de laPhoto");
 		personne1.setCv("url du cv");
-		personne1.setAPropos("a propos de vous");
+		personne1.setApropos("a propos de vous");
 		personne1.setNumero("+33076797...");
 		personne1.setEmail("votre@email.com");
 
-		personne1.setLoisirs(new HashSet<>(){{
-			add(new Hobie() {{ setName("vos Hobies");}});
-			add(new Hobie() {{ setName("Game");}});
-			add(new Hobie() {{ setName("Natation ...");}});
-
-		}});
+		personne1.setLoisirs("vos loisirs");
 
 		personne1.setFormations(new HashSet<>(){{
 			//1

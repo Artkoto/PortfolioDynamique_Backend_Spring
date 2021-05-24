@@ -31,4 +31,10 @@ public class PersonneService {
         Personne personneSauve = personneRepository.save(personne);
         return personneSauve;
     }
+//    public Personne modifyPersonne(final Long id){
+//        Personne personne1 = personneRepository.getOne(id);
+//        return  personneRepository.save()
+//    }
+
+    //TODO ajouter les autres services dont j'ai besoin
 }

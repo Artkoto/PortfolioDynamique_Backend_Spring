@@ -3,8 +3,9 @@ package com.artkoto.portfoli.backend.controller;
 import com.artkoto.portfoli.backend.model.Personne;
 import com.artkoto.portfoli.backend.service.PersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class PersonneController {
@@ -12,14 +13,46 @@ public class PersonneController {
     private PersonneService personneService;
 
     /**
-     * Read - Get all personnes
-     * @return - An Iterable object of personnes full filled
+     * @return - Toutes les personnes
      */
     @GetMapping("/personnes")
     public Iterable<Personne> getPersonnes() {
         return personneService.getPersonnes();
+    }
 
+    /**
+     * @param id
+    * @return - la personne avec l'id id
+     */
+    @GetMapping("/personnes/{id}")
+    public Optional<Personne> getPersonne(@PathVariable("id") final Long id){
+        return personneService.getPersonne(id);
+    }
+
+    /**
+     * ajout d'une nouvelle personne
+     * @param personne
+     * @return la personne cree
+     */
+    @PostMapping("personnes/add")
+    public Personne savePersonne(Personne personne){
+        return personneService.savePersonne(personne);
+    }
+
+    @PutMapping("personnes/{id}/update")
+    public Personne updatePersonne(Personne personne){
+        return personneService.savePersonne(personne);
+    }
+
+    /**
+     *
+     * @param id
+     * suppression d'une personne avec l'id
+     */
+    @DeleteMapping("/personnes/{id}")
+    public void deletePersonne(@PathVariable("id") final Long id){
+        personneService.deletePersonne(id);
+    }
         //TODO ajot des autres requettes
     }
-}
 
