@@ -13,7 +13,9 @@ public class Competence {
     @Column(length = 25)
     private String name;
     private Integer evolution;
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name = "competence_type_id")
-    private CompetenceType competenceType;
+
+    private String categorie;
+
+    @Column(length = 50)
+    private String sousCategorie;
 }

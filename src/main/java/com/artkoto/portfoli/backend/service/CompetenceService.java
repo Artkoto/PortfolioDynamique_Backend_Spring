@@ -27,10 +27,13 @@ public class CompetenceService {
      * @return
      */
     public Optional<Competence> getcompetence(final Long id2,final Long id){
-        Competence competence = competenceRepository.findById(id).stream().iterator().next();
-        Personne personne =personneService.getPersonne(id2).stream().iterator().next();
-        if (personne != null && personne.getCompetences().contains(competence)){
-            return competenceRepository.findById(id);
+        Optional<Competence> competence = competenceRepository.findById(id);
+        Optional<Personne> personne =personneService.getPersonne(id2);
+        boolean verification = personne.isPresent()
+                && competence.isPresent()
+                && personne.stream().iterator().next().getCompetences().contains(competence.stream().iterator().next());
+        if (verification){
+            return competence;
         }
         return Optional.empty();
     }
@@ -45,7 +48,7 @@ public class CompetenceService {
         if (personne.isPresent()){
             return personne.stream().iterator().next().getCompetences();
         }
-        return null;
+        return new HashSet<>();
     }
 
     /**
@@ -54,14 +57,19 @@ public class CompetenceService {
      * @param id2
      */
     public void  deletecompetence(final Long id, final Long id2){
-        Competence competence = competenceRepository.findById(id).stream().iterator().next();
-        Personne personne =personneService.getPersonne(id2).stream().iterator().next();
-        if (personne != null && personne.getCompetences().contains(competence)){
-            Set<Competence> competences = new HashSet<>(personne.getCompetences());
-            competences.remove(competence);
-            personne.setCompetences(competences);
-            personneService.modifyPersonne(id,personne);
-            competenceRepository.delete(competence);
+        Optional<Competence> competence = competenceRepository.findById(id);
+        Optional<Personne> personne =personneService.getPersonne(id2);
+        boolean verification = personne.isPresent()
+                && competence.isPresent()
+                && personne.stream().iterator().next().getCompetences().contains(competence.stream().iterator().next());
+        if (verification){
+            Personne newPersonne = personne.stream().iterator().next();
+            Competence competence1 = competence.stream().iterator().next();
+            Set<Competence> competences = new HashSet<>(newPersonne.getCompetences());
+            competences.remove(competence1);
+            newPersonne.setCompetences(competences);
+            personneService.modifyPersonne(id,newPersonne);
+            competenceRepository.delete(competence1);
         }
 
     }
@@ -73,15 +81,16 @@ public class CompetenceService {
      * @return competence
      */
     public Competence saveCompetence(Competence competence,final Long id ){
-        if (personneService.getPersonne(id).isPresent()){
-            Personne personne = personneService.getPersonne(id).stream().iterator().next();
+        Optional<Personne> personne1 = personneService.getPersonne(id);
+        if (personne1.isPresent()){
+            Personne personne = personne1.stream().iterator().next();
             Set<Competence> competences = new HashSet<>(personne.getCompetences());
             competences.add(competence);
             personne.setCompetences(competences);
             personneService.modifyPersonne(id,personne);
             return competence;
         }
-        return competence;
+        return new Competence();
     }
 
     /**
@@ -92,10 +101,9 @@ public class CompetenceService {
      */
     public Competence modifycompetence(final Long id, Competence competence){
         if (competenceRepository.existsById(id)) {
-            // competence competence1 = competenceRepository.findById(id).stream().iterator().next();
             return competenceRepository.save(competence);
         }
-        return null;
+        return new Competence();
     }
 
 }

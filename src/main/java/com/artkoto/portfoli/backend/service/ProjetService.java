@@ -27,10 +27,13 @@ public class ProjetService {
      * @return
      */
     public Optional<Projet> getprojet(final Long id2,final Long id){
-        Projet projet = projetRepository.findById(id).stream().iterator().next();
-        Personne personne =personneService.getPersonne(id2).stream().iterator().next();
-        if (personne != null && personne.getProjets().contains(projet)){
-            return projetRepository.findById(id);
+        Optional<Projet> projet = projetRepository.findById(id);
+        Optional<Personne> personne =personneService.getPersonne(id2);
+        boolean verification = personne.isPresent()
+                && projet.isPresent()
+                && personne.stream().iterator().next().getProjets().contains(projet.stream().iterator().next());
+        if (verification){
+            return projet;
         }
         return Optional.empty();
     }
@@ -45,7 +48,7 @@ public class ProjetService {
         if (personne.isPresent()){
             return personne.stream().iterator().next().getProjets();
         }
-        return null;
+        return new HashSet<>();
     }
 
     /**
@@ -54,14 +57,19 @@ public class ProjetService {
      * @param id2
      */
     public void  deleteprojet(final Long id, final Long id2){
-        Projet projet = projetRepository.findById(id).stream().iterator().next();
-        Personne personne =personneService.getPersonne(id2).stream().iterator().next();
-        if (personne != null && personne.getProjets().contains(projet)){
-            Set<Projet> projets = new HashSet<>(personne.getProjets());
-            projets.remove(projet);
-            personne.setProjets(projets);
-            personneService.modifyPersonne(id,personne);
-            projetRepository.delete(projet);
+        Optional<Projet> projet = projetRepository.findById(id);
+        Optional<Personne> personne =personneService.getPersonne(id2);
+        boolean verification = personne.isPresent()
+                && projet.isPresent()
+                && personne.stream().iterator().next().getProjets().contains(projet.stream().iterator().next());
+        if (verification){
+            Personne newPersonne = personne.stream().iterator().next();
+            Projet projet1 = projet.stream().iterator().next();
+            Set<Projet> projets = new HashSet<>(newPersonne.getProjets());
+            projets.remove(projet1);
+            newPersonne.setProjets(projets);
+            personneService.modifyPersonne(id,newPersonne);
+            projetRepository.delete(projet1);
         }
 
     }
@@ -73,15 +81,16 @@ public class ProjetService {
      * @return projet
      */
     public Projet saveProjet(Projet projet,final Long id ){
-        if (personneService.getPersonne(id).isPresent()){
-            Personne personne = personneService.getPersonne(id).stream().iterator().next();
+        Optional<Personne> personne1 = personneService.getPersonne(id);
+        if (personne1.isPresent()){
+            Personne personne = personne1.stream().iterator().next();
             Set<Projet> projets = new HashSet<>(personne.getProjets());
             projets.add(projet);
             personne.setProjets(projets);
             personneService.modifyPersonne(id,personne);
             return projet;
         }
-        return projet;
+        return new Projet();
     }
 
     /**
@@ -92,10 +101,9 @@ public class ProjetService {
      */
     public Projet modifyprojet(final Long id, Projet projet){
         if (projetRepository.existsById(id)) {
-            // projet projet1 = projetRepository.findById(id).stream().iterator().next();
             return projetRepository.save(projet);
         }
-        return null;
+        return new Projet();
     }
 
 }

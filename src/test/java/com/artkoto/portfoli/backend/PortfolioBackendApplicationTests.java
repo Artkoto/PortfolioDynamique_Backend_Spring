@@ -107,17 +107,13 @@ class PersonneControllerTests {
 		personne1.setCompetences(new HashSet<>(){{
 			add(new Competence(){{
 				setName("Spring");
-				setCompetenceType(new CompetenceType(){{
-					setName("Dev");
-				}});
+				setCategorie("PROGRAMMATION");
 				setEvolution(50);
 			}});
 
 			add(new Competence(){{
 				setName("Français");
-				setCompetenceType(new CompetenceType(){{
-					setName("Langue");
-				}});
+				setCategorie("LINGUISTIQUE");
 				setEvolution(95);
 			}});
 		}});

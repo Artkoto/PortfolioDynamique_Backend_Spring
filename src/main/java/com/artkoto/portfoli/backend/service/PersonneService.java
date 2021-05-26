@@ -3,7 +3,7 @@ package com.artkoto.portfoli.backend.service;
 
 import com.artkoto.portfoli.backend.controller.ProjetController;
 import com.artkoto.portfoli.backend.model.Personne;
-import com.artkoto.portfoli.backend.repository.PresonneRepository;
+import com.artkoto.portfoli.backend.repository.PersonneRepository;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class PersonneService {
     @Autowired
-    private PresonneRepository  personneRepository;
+    private PersonneRepository personneRepository;
     @Autowired
     private ProjetController projetController;
 
@@ -30,7 +30,9 @@ public class PersonneService {
     }
 
     public void  deletePersonne(final Long id){
-        personneRepository.deleteById(id);
+        if (personneRepository.existsById(id)) {
+            personneRepository.deleteById(id);
+        }
     }
 
     public Personne savePersonne(Personne personne){
@@ -38,10 +40,9 @@ public class PersonneService {
     }
     public Personne modifyPersonne(final Long id, Personne personne){
         if (personneRepository.existsById(id)) {
-           // Personne personne1 = personneRepository.findById(id).stream().iterator().next();
            return personneRepository.save(personne);
         }
-        return null;
+        return new Personne();
     }
 
 }

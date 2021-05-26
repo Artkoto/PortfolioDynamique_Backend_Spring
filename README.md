@@ -103,3 +103,6 @@ Prise en main de  Spring Framework.
   }
 ]
 ```
+
+## Teste des requêttes HTTP
+![](images/teste_requetteHTTP.png)

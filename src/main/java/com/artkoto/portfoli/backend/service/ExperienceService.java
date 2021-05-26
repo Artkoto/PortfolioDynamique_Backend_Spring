@@ -27,10 +27,13 @@ public class ExperienceService {
      * @return
      */
     public Optional<Experience> getexperience(final Long id2,final Long id){
-        Experience experience = experienceRepository.findById(id).stream().iterator().next();
-        Personne personne =personneService.getPersonne(id2).stream().iterator().next();
-        if (personne != null && personne.getExperiences().contains(experience)){
-            return experienceRepository.findById(id);
+        Optional<Experience> experience = experienceRepository.findById(id);
+        Optional<Personne> personne =personneService.getPersonne(id2);
+        boolean verification = personne.isPresent()
+                && experience.isPresent()
+                && personne.stream().iterator().next().getExperiences().contains(experience.stream().iterator().next());
+        if (verification){
+            return experience;
         }
         return Optional.empty();
     }
@@ -45,7 +48,7 @@ public class ExperienceService {
         if (personne.isPresent()){
             return personne.stream().iterator().next().getExperiences();
         }
-        return null;
+        return new HashSet<>();
     }
 
     /**
@@ -54,14 +57,19 @@ public class ExperienceService {
      * @param id2
      */
     public void  deleteexperience(final Long id, final Long id2){
-        Experience experience = experienceRepository.findById(id).stream().iterator().next();
-        Personne personne =personneService.getPersonne(id2).stream().iterator().next();
-        if (personne != null && personne.getExperiences().contains(experience)){
-            Set<Experience> experiences = new HashSet<>(personne.getExperiences());
-            experiences.remove(experience);
-            personne.setExperiences(experiences);
-            personneService.modifyPersonne(id,personne);
-            experienceRepository.delete(experience);
+        Optional<Experience> experience = experienceRepository.findById(id);
+        Optional<Personne> personne =personneService.getPersonne(id2);
+        boolean verification = personne.isPresent()
+                && experience.isPresent()
+                && personne.stream().iterator().next().getExperiences().contains(experience.stream().iterator().next());
+        if (verification){
+            Personne newPersonne = personne.stream().iterator().next();
+            Experience experience1 = experience.stream().iterator().next();
+            Set<Experience> experiences = new HashSet<>(newPersonne.getExperiences());
+            experiences.remove(experience1);
+            newPersonne.setExperiences(experiences);
+            personneService.modifyPersonne(id,newPersonne);
+            experienceRepository.delete(experience1);
         }
 
     }
@@ -73,15 +81,16 @@ public class ExperienceService {
      * @return experience
      */
     public Experience saveExperience(Experience experience,final Long id ){
-        if (personneService.getPersonne(id).isPresent()){
-            Personne personne = personneService.getPersonne(id).stream().iterator().next();
+        Optional<Personne> personne1 = personneService.getPersonne(id);
+        if (personne1.isPresent()){
+            Personne personne = personne1.stream().iterator().next();
             Set<Experience> experiences = new HashSet<>(personne.getExperiences());
             experiences.add(experience);
             personne.setExperiences(experiences);
             personneService.modifyPersonne(id,personne);
             return experience;
         }
-        return experience;
+        return new Experience();
     }
 
     /**
@@ -92,10 +101,9 @@ public class ExperienceService {
      */
     public Experience modifyexperience(final Long id, Experience experience){
         if (experienceRepository.existsById(id)) {
-            // experience experience1 = experienceRepository.findById(id).stream().iterator().next();
             return experienceRepository.save(experience);
         }
-        return null;
+        return new Experience();
     }
 
 }

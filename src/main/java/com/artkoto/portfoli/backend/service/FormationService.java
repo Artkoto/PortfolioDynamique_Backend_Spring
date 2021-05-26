@@ -27,10 +27,13 @@ public class FormationService {
      * @return
      */
     public Optional<Formation> getformation(final Long id2,final Long id){
-        Formation formation = formationRepository.findById(id).stream().iterator().next();
-        Personne personne =personneService.getPersonne(id2).stream().iterator().next();
-        if (personne != null && personne.getFormations().contains(formation)){
-            return formationRepository.findById(id);
+        Optional<Formation> formation = formationRepository.findById(id);
+        Optional<Personne> personne =personneService.getPersonne(id2);
+        boolean verification = personne.isPresent()
+                && formation.isPresent()
+                && personne.stream().iterator().next().getFormations().contains(formation.stream().iterator().next());
+        if (verification){
+            return formation;
         }
         return Optional.empty();
     }
@@ -45,7 +48,7 @@ public class FormationService {
         if (personne.isPresent()){
             return personne.stream().iterator().next().getFormations();
         }
-        return null;
+        return new HashSet<>();
     }
 
     /**
@@ -54,14 +57,19 @@ public class FormationService {
      * @param id2
      */
     public void  deleteformation(final Long id, final Long id2){
-        Formation formation = formationRepository.findById(id).stream().iterator().next();
-        Personne personne =personneService.getPersonne(id2).stream().iterator().next();
-        if (personne != null && personne.getFormations().contains(formation)){
-            Set<Formation> formations = new HashSet<>(personne.getFormations());
-            formations.remove(formation);
-            personne.setFormations(formations);
-            personneService.modifyPersonne(id,personne);
-            formationRepository.delete(formation);
+        Optional<Formation> formation = formationRepository.findById(id);
+        Optional<Personne> personne =personneService.getPersonne(id2);
+        boolean verification = personne.isPresent()
+                && formation.isPresent()
+                && personne.stream().iterator().next().getFormations().contains(formation.stream().iterator().next());
+        if (verification){
+            Personne newPersonne = personne.stream().iterator().next();
+            Formation formation1 = formation.stream().iterator().next();
+            Set<Formation> formations = new HashSet<>(newPersonne.getFormations());
+            formations.remove(formation1);
+            newPersonne.setFormations(formations);
+            personneService.modifyPersonne(id,newPersonne);
+            formationRepository.delete(formation1);
         }
 
     }
@@ -73,15 +81,16 @@ public class FormationService {
      * @return formation
      */
     public Formation saveFormation(Formation formation,final Long id ){
-        if (personneService.getPersonne(id).isPresent()){
-            Personne personne = personneService.getPersonne(id).stream().iterator().next();
+        Optional<Personne> personne1 = personneService.getPersonne(id);
+        if (personne1.isPresent()){
+            Personne personne = personne1.stream().iterator().next();
             Set<Formation> formations = new HashSet<>(personne.getFormations());
             formations.add(formation);
             personne.setFormations(formations);
             personneService.modifyPersonne(id,personne);
             return formation;
         }
-        return formation;
+        return new Formation();
     }
 
     /**
@@ -92,10 +101,9 @@ public class FormationService {
      */
     public Formation modifyformation(final Long id, Formation formation){
         if (formationRepository.existsById(id)) {
-            // formation formation1 = formationRepository.findById(id).stream().iterator().next();
             return formationRepository.save(formation);
         }
-        return null;
+        return new Formation();
     }
 
 }
