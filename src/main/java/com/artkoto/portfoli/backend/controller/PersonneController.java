@@ -53,7 +53,6 @@ public class PersonneController {
     public void deletePersonne(@PathVariable("id") final Long id){
         personneService.deletePersonne(id);
     }
-        //TODO ajot des autres requettes
 
     }
 

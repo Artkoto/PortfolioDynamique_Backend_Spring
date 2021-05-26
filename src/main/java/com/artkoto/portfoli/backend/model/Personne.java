@@ -3,6 +3,7 @@ package com.artkoto.portfoli.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -41,6 +42,10 @@ public class Personne {
 
     @Column(name = "hobies" , length = 100)
     private String loisirs ;
+
+    @Column(name = "last_update")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date derniereMiseAJour;
 
     @ManyToMany( cascade = {CascadeType.ALL})
     @JoinTable(name="personnes_formations",

@@ -44,7 +44,6 @@ public class CompetenceCategorieController {
     public void deleteCompetenceCategorie(@PathVariable("id") final String id){
         competenceCategorieService.deleteCompetenceCategorie(id);
     }
-    //TODO ajot des autres requettes
 
 }
 

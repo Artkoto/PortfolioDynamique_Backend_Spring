@@ -118,6 +118,8 @@ class PersonneControllerTests {
 			}});
 		}});
 
+		personne1.setDerniereMiseAJour(new Date());
+
 		//ajout à la bdd
 		personneService.savePersonne(personne1);
 
