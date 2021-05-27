@@ -3,11 +3,10 @@ package com.artkoto.portfoli.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Entity
-public class User {
+public class ApiUser {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
@@ -18,12 +17,10 @@ public class User {
     @Column(name = "add_email" ,length = (50) , unique = true, nullable = false)
     private String email;
 
-
-    @Column(name = "password", length = (50), nullable = false )
+    @Column(name = "password", length = (200), nullable = false )
     private String password;
 
-    @OneToMany ( fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private Set<Personne> portfolios ;
+    @Column(name = "api_key" , length = (200),unique = true, nullable = false )
+    private String api_key;
 
 }

@@ -43,6 +43,12 @@ public class Personne {
     @Column(name = "hobies" , length = 100)
     private String loisirs ;
 
+    @Column( length = 50)
+    private String pays ;
+
+    @Column(length = 50)
+    private String ville ;
+
     @Column(name = "last_update")
     @Temporal(TemporalType.TIMESTAMP)
     private Date derniereMiseAJour;
@@ -70,6 +76,5 @@ public class Personne {
             joinColumns= @JoinColumn(name="personne_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="projet_id", referencedColumnName="id"))
    private Set<Projet>projets;
-
 
 }

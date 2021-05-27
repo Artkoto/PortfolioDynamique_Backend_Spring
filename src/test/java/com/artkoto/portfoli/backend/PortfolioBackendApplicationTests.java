@@ -1,6 +1,8 @@
 package com.artkoto.portfoli.backend;
 
 import com.artkoto.portfoli.backend.model.*;
+import com.artkoto.portfoli.backend.repository.ApiUserRepository;
+import com.artkoto.portfoli.backend.repository.UserRepository;
 import com.artkoto.portfoli.backend.service.PersonneService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +28,15 @@ class PersonneControllerTests {
 	public MockMvc mockMvc;
 	@Autowired
 	PersonneService personneService ;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	ApiUserRepository apiUserRepository;
+
 
 	Personne personne1 = new Personne();
+	User user = new User();
+	ApiUser apiUser = new ApiUser();
 
 	@BeforeEach
 	void init() throws Exception {
@@ -121,13 +130,30 @@ class PersonneControllerTests {
 		personne1.setDerniereMiseAJour(new Date());
 
 		//ajout à la bdd
-		personneService.savePersonne(personne1);
+		//personneService.savePersonne(personne1);
+		user.setUser_name("aaaaa");
+		user.setEmail("hjdfgfh@hfg");
+		user.setPassword(Crypter.encrypt("motdepasse"));
+		user.setPortfolios(new HashSet<>(){{
+			add(personne1);
+		}});
+
+		//
+
+		apiUser.setUser_name("aaaaa");
+		apiUser.setEmail("hjdfgfh@hfg");
+		apiUser.setPassword(Crypter.encrypt("motdepasse"));
+		apiUser.setApi_key(Crypter.encrypt("aaa"));
+
+		apiUserRepository.save(apiUser);
+		userRepository.save(user);
+
 
 	}
 
 	@Test
 	void contextLoads()  throws Exception{
-		mockMvc.perform(get("/personnes"))
+		mockMvc.perform(get("/personnes/api_key=aaa"))
 				.andExpect(status().isOk()).andExpect(jsonPath("$[0].nom", is("votre Nom")));
 	}
 

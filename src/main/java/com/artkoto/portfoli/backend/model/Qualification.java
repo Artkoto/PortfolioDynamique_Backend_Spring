@@ -27,6 +27,12 @@ public class Qualification {
     @Column(length = 50)
     private String lieux;
 
+    @Column( length = 50)
+    private String pays ;
+
+    @Column(length = 50)
+    private String ville ;
+
     @Column(length = 300)
     private String detail;
 

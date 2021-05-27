@@ -5,6 +5,8 @@ import com.artkoto.portfoli.backend.service.PersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.Optional;
 
 @RestController
@@ -15,9 +17,9 @@ public class PersonneController {
     /**
      * @return - Toutes les personnes
      */
-    @GetMapping("/personnes")
-    public Iterable<Personne> getPersonnes() {
-        return personneService.getPersonnes();
+    @GetMapping("/personnes/api_key={key}")
+    public Iterable<Personne> getPersonnes(@PathVariable("key") final String key) throws GeneralSecurityException, UnsupportedEncodingException {
+        return personneService.getPersonnes(key);
     }
 
     /**
