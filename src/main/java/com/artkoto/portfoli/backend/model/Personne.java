@@ -31,16 +31,6 @@ public class Personne {
     @Column(name = "cv_link")
     private String cv;
 
-    @Column(name = "activity_dom") //todo enumeration comme competences_categorie manytomany
-    private String domaine_activite;
-
-    @Column(name = "offres_recherchee") //todo enumeration comme competences_categorie manyTOmany
-    private String offres_recherchee;
-
-    //status du candidat EX : recherche de stage ; en cours d'alternance ...
-    @Column(name = "status") //todo enumeration comme competences_categorie manyTOmany
-    private String status;
-
     @Column(name = "about" ,length = (300))
     private String apropos;
 
@@ -62,6 +52,16 @@ public class Personne {
     @Column(name = "last_update")
     @Temporal(TemporalType.TIMESTAMP)
     private Date derniereMiseAJour;
+
+    @Column(name = "activity_dom") //todo enumeration comme competences_categorie manytomany
+    private String domaine_activite;
+
+    @Column(name = "offres_recherchee") //todo enumeration comme competences_categorie manyTOmany
+    private String offres_recherchee;
+
+    //status du candidat EX : recherche de stage ; en cours d'alternance ...
+    @Column(name = "status") //todo enumeration comme competences_categorie manyTOmany
+    private String status;
 
     @ManyToMany( cascade = {CascadeType.ALL})
     @JoinTable(name="personnes_formations",
