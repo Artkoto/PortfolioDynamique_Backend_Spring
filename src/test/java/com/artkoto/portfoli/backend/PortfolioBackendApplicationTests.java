@@ -143,7 +143,8 @@ class PersonneControllerTests {
 		apiUser.setUser_name("aaaaa");
 		apiUser.setEmail("hjdfgfh@hfg");
 		apiUser.setPassword(Crypter.encrypt("motdepasse"));
-		apiUser.setApi_key(Crypter.encrypt("aaa"));
+//		apiUser.setApi_key(Crypter.encrypt("aaa"));
+		apiUser.setApi_key("aaa");
 
 		apiUserRepository.save(apiUser);
 		userRepository.save(user);

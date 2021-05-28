@@ -18,7 +18,7 @@ public class PersonneController {
      * @return - Toutes les personnes
      */
     @GetMapping("/personnes/api_key={key}")
-    public Iterable<Personne> getPersonnes(@PathVariable("key") final String key) throws GeneralSecurityException, UnsupportedEncodingException {
+    public Iterable<Personne> getPersonnes(@PathVariable("key") final String key) {
         return personneService.getPersonnes(key);
     }
 

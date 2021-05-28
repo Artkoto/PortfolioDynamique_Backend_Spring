@@ -1,7 +1,6 @@
 package com.artkoto.portfoli.backend.service;
 
 
-import com.artkoto.portfoli.backend.Crypter;
 import com.artkoto.portfoli.backend.controller.ProjetController;
 import com.artkoto.portfoli.backend.model.Personne;
 import com.artkoto.portfoli.backend.repository.ApiUserRepository;
@@ -32,8 +31,8 @@ public class PersonneService {
     }
 
     //todo prbleme d'encodage à régler
-    public Iterable<Personne> getPersonnes(final String key) throws GeneralSecurityException, UnsupportedEncodingException {
-        if (apiUserRepository.findByApi_key(Crypter.encrypt(key)).isPresent()) {
+    public Iterable<Personne> getPersonnes(final String key)   {
+        if (apiUserRepository.findApi_key(key) != null) {
             return personneRepository.findAll();
         }
         return null;

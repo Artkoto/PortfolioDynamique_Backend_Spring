@@ -16,6 +16,7 @@ import java.util.Base64;
 
 public class Crypter {
 
+    //TODO SUPPRIMER EN PROD
    static byte[] salt = ("12345678").getBytes();
    static int iterationCount = 40000;
    static int keyLength = 128;
@@ -29,11 +30,11 @@ public class Crypter {
         }
     }
 
-    public static String encrypt(String password) throws GeneralSecurityException, UnsupportedEncodingException {
-        return  encrypt(password, key);
+    public static String encrypt(String text) throws GeneralSecurityException, UnsupportedEncodingException {
+        return  encrypt(text, key);
     }
-    public static String decrypt(String password) throws GeneralSecurityException, IOException {
-        return decrypt(password, key);
+    public static String decrypt(String text) throws GeneralSecurityException, IOException {
+        return decrypt(text, key);
     }
 
     public static SecretKeySpec createSecretKey(char[] password, byte[] salt, int iterationCount, int keyLength) throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -67,5 +68,20 @@ public class Crypter {
 
     private static byte[] base64Decode(String property) throws IOException {
         return Base64.getDecoder().decode(property);
+    }
+
+    public static void main(String[] args) throws GeneralSecurityException, IOException {
+        String mot = "momo";
+        String cryp = encrypt(mot);
+        String decryp = decrypt(cryp);
+        String cryp1 = encrypt(mot);
+        String decryp1 = decrypt(cryp1);
+        String cryp2 = encrypt(mot);
+        String decryp2 = decrypt(cryp);
+
+        System.out.println(mot +" " + cryp +" "+ decryp);
+        System.out.println(mot +" " + cryp1 +" "+ decryp1);
+        System.out.println(mot +" " + cryp2 +" "+ decryp2);
+
     }
 }
