@@ -14,7 +14,12 @@ HELP.md
 
 # Maven
 target/
+
+#fichiers sencibles
 *application.properties
+*/Crypter.java
+
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
