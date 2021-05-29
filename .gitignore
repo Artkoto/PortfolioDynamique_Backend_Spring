@@ -17,7 +17,7 @@ target/
 
 #fichiers sencibles
 *application.properties
-*/Crypter.java
+*Crypter.java
 
 
 ### IntelliJ IDEA ###
