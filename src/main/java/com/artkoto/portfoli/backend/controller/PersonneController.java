@@ -5,8 +5,6 @@ import com.artkoto.portfoli.backend.service.PersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
 import java.util.Optional;
 
 @RestController
@@ -17,7 +15,7 @@ public class PersonneController {
     /**
      * @return - Toutes les personnes
      */
-    @GetMapping("/personnes/api_key={key}")
+    @GetMapping(value = "/personnes/api_key={key}")
     public Iterable<Personne> getPersonnes(@PathVariable("key") final String key) {
         return personneService.getPersonnes(key);
     }
@@ -41,7 +39,7 @@ public class PersonneController {
         return personneService.savePersonne(personne);
     }
 
-    @PutMapping("personnes/{id}/update")
+    @PutMapping("personnes/{id}/update" )
     public Personne updatePersonne(Personne personne ,@PathVariable("id") final Long id ){
          return personneService.modifyPersonne(id,personne);
     }

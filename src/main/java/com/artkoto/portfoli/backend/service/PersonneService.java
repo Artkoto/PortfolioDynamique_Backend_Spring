@@ -30,7 +30,6 @@ public class PersonneService {
         return personneRepository.findById(id);
     }
 
-    //todo prbleme d'encodage à régler
     public Iterable<Personne> getPersonnes(final String key)   {
         if (apiUserRepository.findApi_key(key) != null) {
             return personneRepository.findAll();
