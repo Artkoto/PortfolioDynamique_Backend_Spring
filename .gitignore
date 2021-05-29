@@ -14,7 +14,7 @@ HELP.md
 
 # Maven
 target/
-*/resources/application.properties
+*application.properties
 ### IntelliJ IDEA ###
 .idea
 *.iws
